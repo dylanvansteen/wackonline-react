@@ -1,74 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-// import { mailFolderListItems, otherMailFolderListItems } from './tileData';
+import { Switch, Route } from 'react-router';
+import { HashRouter } from 'react-router-dom';
+import Main from './pages/main';
+import Login from './pages/login';
+import NotFound from './pages/notFound';
+import PrivateRoute from './components/privateRoute';
 
-const drawerWidth = 240;
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        height: '100%',
-        zIndex: 1,
-        overflow: 'hidden',
-        position: 'relative',
-        display: 'flex'
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1
-    },
-    drawerPaper: {
-        position: 'relative',
-        width: drawerWidth
-    },
-    content: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
-        padding: theme.spacing.unit * 3,
-        minWidth: 0 // So the Typography noWrap works
-    },
-    toolbar: theme.mixins.toolbar
+const theme = createMuiTheme({
+    palette: {
+        type: 'dark'
+    }
 });
 
-function ClippedDrawer(props) {
-    const { classes } = props;
-
+export const App = props => {
     return (
-        <div className={classes.root}>
-            <AppBar position="absolute" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="title" color="inherit" noWrap>
-                        Clipped drawer
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper
-                }}
-            >
-                <div className={classes.toolbar} />
-                {/* <List>{mailFolderListItems}</List> */}
-                <Divider />
-                {/* <List>{otherMailFolderListItems}</List> */}
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
-            </main>
-        </div>
+        <MuiThemeProvider theme={theme}>
+            <HashRouter>
+                <Switch>
+                    <PrivateRoute exact path="/" component={Main} />
+                    <Route path="/login" component={Login} />
+                    <Route component={NotFound} />
+                </Switch>
+            </HashRouter>
+        </MuiThemeProvider>
     );
-}
-
-ClippedDrawer.propTypes = {
-    classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ClippedDrawer);
+export default App;
