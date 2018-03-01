@@ -3,9 +3,6 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
-workflows:
-      -deploy:
-
 jobs:
   build:
     docker:
@@ -39,8 +36,7 @@ jobs:
       # run tests!
       - run: yarn test
 
-
-     deploy-job:
+  deploy-job:
        docker:
          - image: circleci/node:7.10
        working_directory: ~/repro  
@@ -51,8 +47,12 @@ jobs:
              name: Deploy Master to Firebase
              command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
                
-    
+    workflows:
+      version: 2
       
+      -deploy:
+        jobs:
+          - build
           - deploy-job:
               requires:
                 - build
