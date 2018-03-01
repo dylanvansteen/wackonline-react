@@ -41,7 +41,7 @@ jobs:
          - image: circleci/node:7.10
        working_directory: ~/repro  
        environment: 
-       -  FIREBASE_DEPLOY_TOKEN: 1/XD_wSPA-W0ceWdufAAXYnNtvgmCSzTQ-cN7OuYXHQmY
+       -  $FIREBASE_DEPLOY_TOKEN: 1/XD_wSPA-W0ceWdufAAXYnNtvgmCSzTQ-cN7OuYXHQmY
        steps:
          - run:
              name: Deploy Master to Firebase
