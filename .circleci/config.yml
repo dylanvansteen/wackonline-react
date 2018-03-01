@@ -41,6 +41,8 @@ jobs:
        docker:
          - image: circleci/node:7.10
        working_directory: ~/repro  
+       environment: 
+       -  FIREBASE_DEPLOY_TOKEN: 1/XD_wSPA-W0ceWdufAAXYnNtvgmCSzTQ-cN7OuYXHQmY
        steps:
          - run:
              name: Deploy Master to Firebase
@@ -51,10 +53,10 @@ jobs:
       
       -deploy:
         jobs:
-          - build-job
+          - build
           - deploy-job:
               requires:
-                - build-job
+                - build
               filters:
                 branches:
                   only: master
