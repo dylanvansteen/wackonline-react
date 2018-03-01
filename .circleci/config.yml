@@ -51,10 +51,10 @@ jobs:
       
       -deploy:
         jobs:
-          - build
+          - build-job
           - deploy-job:
               requires:
-                - build
+                - build-job
               filters:
                 branches:
                   only: master
