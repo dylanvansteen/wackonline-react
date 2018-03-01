@@ -3,6 +3,9 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
+workflows:
+      -deploy:
+
 jobs:
   build:
     docker:
@@ -48,12 +51,8 @@ jobs:
              name: Deploy Master to Firebase
              command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
                
-    workflows:
-      version: 2
+    
       
-      -deploy:
-        jobs:
-          - build
           - deploy-job:
               requires:
                 - build
