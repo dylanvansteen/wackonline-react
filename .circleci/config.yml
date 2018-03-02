@@ -45,7 +45,6 @@ jobs:
 
       # run tests!
       - run: yarn test
-
 workflows:
   version: 2
   build_and_test:
